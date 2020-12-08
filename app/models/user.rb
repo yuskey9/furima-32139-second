@@ -4,10 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :nickname, presence: true
-
+  
   password_regex = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
   validates_format_of :password, with: password_regex, message: 'please set including both letters and numbers.'
+
+  with_options presence: true do
+    validates :nickname, :birth_date
+  end
 
   with_options presence: true do
     validates :last_name, :first_name, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: "It is invalid. Please enter the user's real name in full-width." }
@@ -19,7 +22,6 @@ class User < ApplicationRecord
     # 全角カタカナのバリデーション
   end
 
-  validates :birth_date, presence: true
 
   has_many :items
   has_many :orders
