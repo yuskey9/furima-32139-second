@@ -5,18 +5,18 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :genre_category
-  belongs_to :genre_condition
-  belongs_to :genre_shipping_charge
-  belongs_to :genre_shipping_area
-  belongs_to :genre_days_to_ship
+  belongs_to :category
+  belongs_to :sales_status
+  belongs_to :shipping_fee_status
+  belongs_to :prefecture
+  belongs_to :scheduled_delivery
 
 
   with_options presence: true do
     validates :name, :info, :category_id, :sales_status_id, :shipping_fee_status_id, :prefecture_id, :scheduled_delivery_id, :price
   end
 
-  validates :genre_category_id, :genre_condition_id, :genre_shipping_charge_id, :genre_shipping_area_id, :genre_days_to_ship_id, numericality: { other_than: 1 } 
+  validates :category_id, :sales_status_id, :shipping_fee_status_id, :prefecture_id, :scheduled_delivery_id, numericality: { other_than: 1 } 
 
 
 
