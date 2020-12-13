@@ -4,7 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  
   password_regex = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
   validates_format_of :password, with: password_regex, message: 'please set including both letters and numbers.'
 
@@ -21,7 +20,6 @@ class User < ApplicationRecord
     validates :last_name_kana, :first_name_kana, format: { with: /\A[ァ-ヶー－]+\z/, message: "It is invalid. Please enter the user's real name in full-width katakana." }
     # 全角カタカナのバリデーション
   end
-
 
   has_many :items
   has_many :orders
