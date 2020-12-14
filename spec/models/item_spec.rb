@@ -40,7 +40,7 @@ RSpec.describe Item, type: :model do
       it '商品のカテゴリー情報は空であるプルダウンの１つ目を選択しては出品ができない' do
         @item.category_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category must be other than 1")
+        expect(@item.errors.full_messages).to include('Category must be other than 1')
       end
 
       it '商品の状態についての情報が空では出品できない' do
@@ -52,8 +52,8 @@ RSpec.describe Item, type: :model do
       it '商品の状態についての情報は、空であるプルダウンの１つ目を選択しては出品ができない' do
         @item.sales_status_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Sales status must be other than 1")
-      end      
+        expect(@item.errors.full_messages).to include('Sales status must be other than 1')
+      end
 
       it '商品の配送料の負担についての情報が空では出品できない' do
         @item.shipping_fee_status_id = ''
@@ -64,8 +64,8 @@ RSpec.describe Item, type: :model do
       it '商品の配送料の負担についての情報は、空であるプルダウンの１つ目を選択しては出品ができない' do
         @item.shipping_fee_status_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping fee status must be other than 1")
-      end            
+        expect(@item.errors.full_messages).to include('Shipping fee status must be other than 1')
+      end
 
       it '商品の発送元の地域についての情報が空では出品できない' do
         @item.prefecture_id = ''
@@ -76,8 +76,8 @@ RSpec.describe Item, type: :model do
       it '商品の配送料の負担についての情報は、空であるプルダウンの１つ目を選択しては出品ができない' do
         @item.prefecture_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Prefecture must be other than 1")
-      end                 
+        expect(@item.errors.full_messages).to include('Prefecture must be other than 1')
+      end
 
       it '商品の発送までの日数についての情報が空では出品できない' do
         @item.scheduled_delivery_id = ''
@@ -88,32 +88,32 @@ RSpec.describe Item, type: :model do
       it '商品の発送までの日数についての情報は、空であるプルダウンの１つ目を選択しては出品ができない' do
         @item.scheduled_delivery_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Scheduled delivery must be other than 1")
-      end                
-      
+        expect(@item.errors.full_messages).to include('Scheduled delivery must be other than 1')
+      end
+
       it '商品の価格についての情報が空では出品できない' do
         @item.price = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank", 'Price is not a number', 'Price Price is not a number')
       end
-      
+
       it '商品の価格が299円以下では出品できない' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
       end
-      
+
       it '商品の価格が10,000,000円以上では出品できない' do
-        @item.price = 10000000
+        @item.price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
+        expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
 
       it '商品の販売価格は全角数字では保存も出品もできない' do
         @item.price = '１２３'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
-      end        
+      end
     end
   end
 end
