@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit]
-  before_action :set_item, expect: [:index, :new, :create]
+  before_action :set_item, except: [:index, :new, :create]
   before_action :set_unless, only: [:edit, :update, :destroy]
 
   def index
@@ -35,10 +35,14 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
-    redirect_to root_path
+    if @item.destroy
+      redirect_to root_path
+    else
+      redirect_to root_path
+    end  
   end
 
+  
   private
 
   def item_params
