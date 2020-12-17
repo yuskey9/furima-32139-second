@@ -37,12 +37,10 @@ class ItemsController < ApplicationController
   def destroy
     if @item.destroy
       redirect_to root_path
-    else
-      redirect_to root_path
     end  
   end
 
-  
+
   private
 
   def item_params
@@ -54,6 +52,6 @@ class ItemsController < ApplicationController
   end
 
   def set_unless
-    redirect_to root_path unless current_user == @item.user
+    redirect_to root_path unless current_user.id == @item.user.id
   end
 end
