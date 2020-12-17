@@ -7,11 +7,9 @@ class ItemsController < ApplicationController
     @items = Item.all.order(created_at: :desc)
   end
 
-
   def new
     @item = Item.new
   end
-
 
   def create
     @item = Item.new(item_params)
@@ -22,14 +20,11 @@ class ItemsController < ApplicationController
     end
   end
 
-
   def show
   end
 
-
   def edit
   end
-
 
   def update
     if @item.update(item_params)
@@ -43,8 +38,7 @@ class ItemsController < ApplicationController
     @item.destroy
     redirect_to root_path
   end
-  
-  
+
   private
 
   def item_params
@@ -56,8 +50,6 @@ class ItemsController < ApplicationController
   end
 
   def set_unless
-    unless current_user == @item.user
-      redirect_to root_path
-    end
+    redirect_to root_path unless current_user == @item.user
   end
 end
