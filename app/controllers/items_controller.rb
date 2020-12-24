@@ -51,6 +51,10 @@ class ItemsController < ApplicationController
   end
 
   def set_unless
-    redirect_to root_path unless current_user.id == @item.user.id
+    if user_signed_in? && @item.order.present?
+      unless current_user.id == @item.user.id
+        redirect_to root_path
+      end
+    end  
   end
 end
