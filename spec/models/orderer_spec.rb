@@ -14,7 +14,6 @@ RSpec.describe Orderer, type: :model do
       end
     end
 
-
     context '商品の購入がうまくいかないとき' do
       it 'クレジットカード情報のカード番号、有効期限、セキュリティコードが空では購入できない' do
         @orderer.token = ''
@@ -31,20 +30,19 @@ RSpec.describe Orderer, type: :model do
       it '配送先の郵便番号にハイフンが無いと購入できない' do
         @orderer.postal_code = '1234567'
         @orderer.valid?
-        expect(@orderer.errors.full_messages).to include("Postal code is invalid")
+        expect(@orderer.errors.full_messages).to include('Postal code is invalid')
       end
 
       it '配送先の郵便番号が７桁以外では購入できない' do
         @orderer.postal_code = '123-45678'
         @orderer.valid?
-        expect(@orderer.errors.full_messages).to include()
-      end  
-
+        expect(@orderer.errors.full_messages).to include
+      end
 
       it '配送先の都道府県は空であるプルダウンの１つ目を選択しては購入できない' do
         @orderer.prefecture = 1
         @orderer.valid?
-        expect(@orderer.errors.full_messages).to include("Prefecture must be other than 1")
+        expect(@orderer.errors.full_messages).to include('Prefecture must be other than 1')
       end
 
       it '配送先の市区町村が空では購入できない' do
@@ -64,17 +62,17 @@ RSpec.describe Orderer, type: :model do
         @orderer.valid?
         expect(@orderer.errors.full_messages).to include("Phone number can't be blank")
       end
-      
+
       it '配送先の電話番号にハイフンがあると購入できない' do
         @orderer.phone_number = '090-1234-5678'
         @orderer.valid?
-        expect(@orderer.errors.full_messages).to include("Phone number is invalid")
+        expect(@orderer.errors.full_messages).to include('Phone number is invalid')
       end
-      
+
       it '配送先の電話番号が10桁、もしくは11桁以外では購入できない' do
         @orderer.phone_number = '090123456789'
         @orderer.valid?
-        expect(@orderer.errors.full_messages).to include("Phone number is invalid")
+        expect(@orderer.errors.full_messages).to include('Phone number is invalid')
       end
     end
   end

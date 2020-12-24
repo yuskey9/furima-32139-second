@@ -39,7 +39,6 @@ class ItemsController < ApplicationController
     redirect_to root_path
   end
 
-
   private
 
   def item_params
@@ -51,10 +50,6 @@ class ItemsController < ApplicationController
   end
 
   def set_unless
-    if user_signed_in? && @item.order.present?
-      unless current_user.id == @item.user.id
-        redirect_to root_path
-      end
-    end  
+    redirect_to root_path if user_signed_in? && @item.order.present? && !current_user.id == @item.user.id
   end
 end
