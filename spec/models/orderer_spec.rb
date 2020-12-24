@@ -9,12 +9,19 @@ RSpec.describe Orderer, type: :model do
 
   describe '商品の購入' do
     context '商品の購入がうまくいくとき' do
-      it '配送先の郵便番号,都道府県,市区町村,番地,電話番号が存在すれば購入できる' do
+      it 'クレジットカード情報のカード番号、有効期限、セキュリティコード、配送先の郵便番号、都道府県、市区町村、番地、電話番号が存在すれば購入できる' do
         expect(@orderer).to be_valid
       end
     end
 
+
     context '商品の購入がうまくいかないとき' do
+      it 'クレジットカード情報のカード番号、有効期限、セキュリティコードが空では購入できない' do
+        @orderer.token = ''
+        @orderer.valid?
+        expect(@orderer.errors.full_messages).to include("Token can't be blank")
+      end
+
       it '配送先の郵便番号が空では購入できない' do
         @orderer.postal_code = ''
         @orderer.valid?
@@ -35,7 +42,7 @@ RSpec.describe Orderer, type: :model do
 
 
       it '配送先の都道府県は空であるプルダウンの１つ目を選択しては購入できない' do
-        @orderer.prefecture_id = 1
+        @orderer.prefecture = 1
         @orderer.valid?
         expect(@orderer.errors.full_messages).to include("Prefecture must be other than 1")
       end
