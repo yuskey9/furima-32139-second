@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
     @order = Orderer.new(order_params)
     @item = Item.find(params[:item_id])
     if @order.valid?
-      Payjp.api_key = "sk_test_92f19b5b5ce56e0b78db4e29"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
+      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp::Charge.create(
         amount: @item.price,  # 商品の値段
         card: order_params[:token],    # カードトークン
