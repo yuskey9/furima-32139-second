@@ -9,6 +9,12 @@ class OrdersController < ApplicationController
     @order = Orderer.new(order_params)
     @item = Item.find(params[:item_id])
     if @order.valid?
+      Payjp.api_key = "sk_test_92f19b5b5ce56e0b78db4e29"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
+      Payjp::Charge.create(
+        amount: @item.price,  # 商品の値段
+        card: order_params[:token],    # カードトークン
+        currency: 'jpy'                 # 通貨の種類（日本円）
+      )
       @order.save
       redirect_to root_path
     else
@@ -19,7 +25,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:orderer).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:orderer).permit(:token, :postal_code, :prefecture, :city, :addresses, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
 
