@@ -79,6 +79,12 @@ RSpec.describe Orderer, type: :model do
         expect(@orderer.errors.full_messages).to include('Phone number is invalid')
       end
 
+      it '配送先の電話番号が英数混合では購入できない' do
+        @orderer.phone_number = '09012345aaaa'
+        @orderer.valid?
+        expect(@orderer.errors.full_messages).to include('Phone number is invalid')
+      end
+      
       it 'user_idが空では購入できない' do
         @orderer.user_id = '' 
         @orderer.valid?
