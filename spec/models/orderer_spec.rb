@@ -12,6 +12,10 @@ RSpec.describe Orderer, type: :model do
       it 'クレジットカード情報のカード番号、有効期限、セキュリティコード、配送先の郵便番号、都道府県、市区町村、番地、電話番号が存在すれば購入できる' do
         expect(@orderer).to be_valid
       end
+
+      it '配送先の建物名が抜けていても購入できる' do
+        expect(@orderer).to be_valid
+      end  
     end
 
     context '商品の購入がうまくいかないとき' do
@@ -73,6 +77,18 @@ RSpec.describe Orderer, type: :model do
         @orderer.phone_number = '090123456789'
         @orderer.valid?
         expect(@orderer.errors.full_messages).to include('Phone number is invalid')
+      end
+
+      it 'user_idが空では購入できない' do
+        @orderer.user_id = '' 
+        @orderer.valid?
+        expect(@orderer.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'item_idが空では購入できない' do
+        @orderer.item_id = ''
+        @orderer.valid?
+        expect(@orderer.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
